@@ -7,50 +7,46 @@
 * their boundry zone.
 */
 
-//first use Composer to load the phpmailer library
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
+//first use Composer to load the phpmailer and PHPMailerSendGrid libraries.
+use PHPMailer\PHPMailer\PHPMailerSendGrid;
 use PHPMailer\PHPMailer\Exception;
-require_once "../vendor/autoload.php";
+require_once '../vendor/autoload.php';
 
 //accepts an array representing a row of clinicians.csv
 //sends an email warning that the relevant clinician has
 //left the boundry area
 function sendWarningEmail ($clinicianData)
 {
-    //create phpmailer object
-    $mail = new PHPMailer();
+    //email is sent via the service SendGrid, which is accessed through
+    //the PHPMailerSendGrid library
+    $mail = new PHPMailerSendGrid();
 
-    //authorize email credentials from env data
-    $mail->IsSMTP();
-    $mail->Host = "smtp.example.com";
+    try {
+        //initiate sendGrid settings
+        $mail->isSendGrid();
 
-    // optional
-    // used only when SMTP requires authentication  
-    $mail->SMTPAuth = true;
-    $mail->Username = 'smtp_username';
-    $mail->Password = 'smtp_password';
+        //note: in a professional build, this should be hidden in an env variable.
+        //$mail->SendGridApiKey = "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"; 
+        $mail->SendGridApiKey = "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"; 
+    
+        //begin setting email metadata
+        $mail->setFrom('noreply@sh-warnings.com', 'noreply');
 
-    //destination email is hard-codded and provided in the challenge instructions.
-    $mail->addAddress("sprinter-eng-test@guerrillamail.info");
+        //hardcoded email provided by project instructions
+        $mail->addAddress('sprinter-eng-test@guerrillamail.info');
+    
+        $subject = "Warning: Clinician " . $clinicianData[1] . " has left their designated safety zone.";
+        $mail->Subject = $subject;
 
-    //define email headers.
-
-    $subject = "Warning: Clinician " . $clinicianData[1] . " has left their designated safety zone.";
-    $mail->Subject = $subject;
-
-    $from = "From: no-reply@sh-warnings.com" . "\r\n";
-    $mail->setFrom("no-reply@sh-warnings.com");
-
-    $text = "Warning! Clinician " . $clinicianData[1] . " with ID: " . $clinicianData[0] . " has left their designated safety zone!\n";
-    $text .= "They were last seen at the coordinates " . $clinicianData[4] . " on [x].";
-
-    $mail->msgHTML($text);
-
-    if (!$mail->send()) {
-        return 'Mailer Error: ' . $mail->ErrorInfo;
-    } else {
-        return 'Message sent!';
+        $mail->isHTML(true);
+        $text = "Warning! Clinician " . $clinicianData[1] . " with ID: " . $clinicianData[0] . " has left their designated safety zone!\n";
+        $text .= "They were last seen at the coordinates " . $clinicianData[4];
+        $mail->Body = $text;
+    
+        $mail->send();
+        return 'Message has been sent.';
+    } catch (Exception $e) {
+        return 'Message could not be sent. Mailer Error: ' . $mail->ErrorInfo;
     }
 }
 
