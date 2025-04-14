@@ -1,1 +1,2 @@
-id,name,status,lastLocation
+# clinicians.csv    
+"id","name","status","lastLocation","lastUpdated","lastGeoJSON"
