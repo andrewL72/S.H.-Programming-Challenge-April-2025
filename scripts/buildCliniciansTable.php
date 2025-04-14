@@ -20,10 +20,15 @@ fclose($cFile);
 
 //build table header.
 $output = "<table class='table table-striped'> <thead class='thead-light'> <tr> <th scope='col'></th> <th scope='col'>Clinician</th> 
-            <th scope='col'>Coordinates</th> <th scope='col'>Status</th> <th scope='col' hidden>Warning Message</th> </tr> </thead>";
+            <th scope='col'>Coordinates</th> <th scope='col'>Status</th> <th scope='col'>GeoJSON</th> </tr> </thead>";
 
 foreach ($clinicians as $c)
 {
+    //skip column headers row
+    if($c[0] == "id")
+    {
+        continue;
+    }
     $output .= "<tr>";
     $output .= "<th scope='row'> <input type='radio' id='radio" . $c[0] . "' value='" . $c[0] . "'> </th>";
     $output .= "<td>" . $c[1] . "</td>";
@@ -42,14 +47,8 @@ foreach ($clinicians as $c)
         $output .= "<td> <span style='color:black'>" . $c[2] . "</span> </td>";
     }
 
-    if ($c[2] == "OUT OF BOUNDS")
-    {
-        $output .= "<td style='background-color:lightblue;opacity:0.3;'> <span style='color:red'> ! Warning email sent on [x] </span> </td>";
-    }
-    else
-    {
-        $output .= "<td></td>";
-    }
+    //geojson data goes here.
+    $output .= "<td> <div class='geoJSONBox' style='height:40px;width:300px;border:1px solid;overflow:auto;'>" . $c[5] . "</div> </td>";
 
     $output .= "</tr>";
 }

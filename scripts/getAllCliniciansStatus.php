@@ -88,8 +88,8 @@ foreach ($clinicians as $c)
     }
 
     //update geoJSON
-    $c[5] = "updated lol";
-
+    $c[5] = $response;
+    
     //echo "\n<br>" . implode(",", $c) . "<br>";
     fputcsv($cFile, $c, ",", "\"", "\\", "\n");
 
