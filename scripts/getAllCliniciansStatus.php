@@ -13,16 +13,17 @@
 include_once "./isInBounds.php";
 
 //first, load in clinician data
-$file = fopen("../data/clinicians.csv", "r");
+$cFile = fopen("../data/clinicians.csv", "r");
 $clinicians = array();
-while(($nextLine = fgetcsv($file, 0 ,",","\"","\\")) !== false)
+while(($nextLine = fgetcsv($cFile, 0 ,",","\"","\\")) !== false)
 {
     $clinicians[] = $nextLine;
 }
-fclose($file);
+fclose($cFile);
 
 //update csv file
-$file = fopen("../data/clinicians.csv", "w");
+$cFile = fopen("../data/clinicians.csv", "w");
+$eFile = fopen("../data/event_log.csv", "a");
 foreach ($clinicians as $c)
 {
     $id = $c[0];
@@ -67,8 +68,12 @@ foreach ($clinicians as $c)
     $c[4] = "updated lol";
 
     echo "<br>" . implode(",", $c) . "<br>";
-    fputcsv($file, $c, ",", "\"", "\\", "\n");
+    fputcsv($cFile, $c, ",", "\"", "\\", "\n");
+
+    $event = array($id, $c[2], $c[3], "updated lol");
+    fputcsv($eFile, $event, ",", "\"", "\\", "\n");
 
 }
-fclose($file);
+fclose($cFile);
+fclose($eFile);
 ?>
