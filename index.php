@@ -49,20 +49,33 @@
             id: clinicianID
           },
           success: function (data){
-            console.log("data recieved!");
-            $("#curClinicianStatus").html(data);
+            console.log("data recieved from getAllCliniciansStatus!");
+            //$("#curClinicianStatus").html(data);
           },
           error:function(e){
                 //the script that runs the curl call to the api failed.
-                console.error("getClinicianStatus.php returned an error.");
+                console.error("getAllCliniciansStatus.php returned an error.");
                 console.error(e);
             }  
         });
+        updateCliniciansTable();
       }
 
       function updateCliniciansTable()
       {
-
+        $.ajax({
+          url: "./scripts/buildCliniciansTable.php",
+          type: "GET",
+          success: function (data){
+            console.log("data recieved from buildCliniciansTable!");
+            $("#curClinicianStatus").html(data);
+          },
+          error:function(e){
+                //the script that runs the curl call to the api failed.
+                console.error("buildCliniciansTable.php returned an error.");
+                console.error(e);
+            }  
+        });
       }
     </script>
   </body>
