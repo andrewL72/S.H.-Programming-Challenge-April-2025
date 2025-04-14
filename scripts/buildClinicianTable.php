@@ -19,6 +19,37 @@ fclose($cFile);
 unset($clinicians[0]);
 
 //build table header.
-$output = "<table> <tr> <th>Clinician</th> <th>Coordinates</th> <th>Status</th>"
+$output = "<table> <tr> <th></th> <th>Clinician</th> <th>Coordinates</th> <th>Status</th> <th hidden>Warning Message</th> </tr>";
 
+foreach ($clinicians as $c)
+{
+    $output .= "<tr>";
+    $output .= "<td> <input type='radio' id='radio" . $c[0] . "' value='" . $c[0] . "'> </td>";
+    $output .= "<td>" . $c[1] . "</td>";
+    $output .= "<td>" . $c[4] . "</td>";
+
+    if ($c[2] == "IN BOUNDS")
+    {
+        $output .= "<td> <span style='color:green'>" . $c[2] . "</span> </td>";
+    }
+    else if ($c[2] == "OUT OF BOUNDS")
+    {
+        $output .= "<td> <span style='color:red'>" . $c[2] . "</span> </td>";
+    }
+    else
+    {
+        $output .= "<td> <span style='color:black'>" . $c[2] . "</span> </td>";
+    }
+
+    if ($c[2] == "OUT OF BOUNDS")
+    {
+        $output .= "<td> <span style='color:red'> ! Warning email sent on [x] </span> </td>";
+    }
+
+    $output .= "</tr>";
+}
+
+$output .= "</table>";
+
+echo $output;
 ?>
