@@ -1,0 +1,73 @@
+<?php
+/*
+* getAllCliniciansStatus.php
+* Andrew Leamy, April 2025
+* Script updates all clinicians specified in clinicians.csv with
+* their current location status. Also updates event_log.csv for
+* each clinician.
+*/
+
+include_once "./isInBounds.php";
+
+//first, load in clinician data
+$file = fopen("../data/clinicians.csv", "r");
+$clinicians = array();
+while(($nextLine = fgetcsv($file, 0 ,",","\"","\\")) !== false)
+{
+    $clinicians[] = $nextLine;
+}
+fclose($file);
+
+foreach ($clinicians as $c)
+{
+    $id = $c[0];
+    
+    //skip column name row
+    if ($id == "id")
+    {
+        continue;
+    }
+
+    $cmd = "curl https://3qbqr98twd.execute-api.us-west-2.amazonaws.com/test/clinicianstatus/" . $id;
+    $response = exec(escapeshellcmd($cmd));
+    $inBounds = isInBounds($response);
+
+    //update event log here
+
+    //first update clinician status
+    if ($inBounds == 1)
+    {
+        //clinician is IN BOUNDS
+        //echo "<p style='color:green'> IN BOUNDS </p>";
+        $c[2] = "IN BOUNDS";
+    }
+    else if ($inBounds == 0)
+    {
+        //clinician is OUT OF BOUNDS
+        //echo "<p style='color:red'> OUT OF BOUNDS </p>";
+        $c[2] = "OUT OF BOUNDS";
+    }
+    else if ($inBounds == -1)
+    {
+        //isInBounds failed. Mostly likely the aws server returned a 400 message which 
+        //the function couldn't process.
+        //echo "<p style='color:black'> SERVER ERROR </p>";
+        $c[2] = "ERROR";
+    }
+
+    //then update timestamp
+    $c[3] = time();
+
+    //update geoJSON
+    $c[4] = "updated lol";
+
+}
+
+//update csv file
+$file = fopen("../data/clinicians.csv", "w");
+foreach ($clinicians as $c)
+{
+    fputcsv($file, $c, ",", "\"", "\\", "\n");
+}
+fclose($file);
+?>

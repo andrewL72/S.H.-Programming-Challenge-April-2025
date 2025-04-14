@@ -63,6 +63,8 @@ if (isset($_POST["id"]))
     }
     fclose($file);
 
+    //also need to updated event log:
+
     foreach ($clinicians as $c)
     {
         echo "<br>" . implode(",", $c) . "<br>";
