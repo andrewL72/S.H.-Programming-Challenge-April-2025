@@ -65,13 +65,16 @@ foreach ($clinicians as $c)
     //then update timestamp
     $c[3] = time();
 
+    //update coordinates
+    $c[4] = "[" . implode(",", $geoJSON->features[0]->geometry->coordinates) . "]";
+
     //update geoJSON
-    $c[4] = "updated lol";
+    $c[5] = "updated lol";
 
     echo "<br>" . implode(",", $c) . "<br>";
     fputcsv($cFile, $c, ",", "\"", "\\", "\n");
 
-    $event = array($id, $c[2], $c[3], "updated lol");
+    $event = array($id, $c[2], $c[3], $c[4], "updated lol");
     fputcsv($eFile, $event, ",", "\"", "\\", "\n");
 
 }
