@@ -61,11 +61,10 @@ foreach ($clinicians as $c)
 
         //if clinician has just moved out of bounds (ie their status is not already 'out of bounds')
         //then send a warning email to the system.
-
         if($c[2] != "OUT OF BOUNDS")
         {
-            $mailResult = sendWarningEmail($c);
-            echo "<br>" . $mailResult . "<br>";
+            // $mailResult = sendWarningEmail($c);
+            // echo "<br>" . $mailResult . "<br>";
         }
         $c[2] = "OUT OF BOUNDS";
     }
