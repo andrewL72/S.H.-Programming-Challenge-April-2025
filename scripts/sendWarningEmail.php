@@ -7,33 +7,24 @@
 * their boundry zone.
 */
 
-//sends a warning email stating that the clinician of the 
-//passed id has left their boundry zone.
-function sendWarningEmail ($id)
+//accepts an array representing a row of clinicians.csv
+//sends an email warning that the relevant clinician has
+//left the boundry area
+function sendWarningEmail ($clinicianData)
 {
     //destination email is hard-codded and provided in the challenge instructions.
     $to = "sprinter-eng-test@guerrillamail.info";
 
-    //load in clinician data.
-    $cFile = fopen("../data/clinicians.csv", "r");
-    $clinicians = array();
-    while(($nextLine = fgetcsv($cFile, 0 ,",","\"","\\")) !== false)
-    {
-        $clinicians[] = $nextLine;
-    }
-    fclose($cFile);
-
-    $target = $clinicians[$id];
-
     //define email headers.
 
-    $subject = "Warning: Clinician " . $target[1] . " has left their designated safety zone.";
+    $subject = "Warning: Clinician " . $clinicianData[1] . " has left their designated safety zone.";
 
     $from = "From: no-reply@sh-warnings.com" . "\r\n";
 
-    $text = "Warning! Clinician " . $target[1] . " with ID: " . $target[0] . " has left their designated safety zone!";
+    $text = "Warning! Clinician " . $clinicianData[1] . " with ID: " . $clinicianData[0] . " has left their designated safety zone!\n";
+    $text .= "They were last seen at the coordinates " . $clinicianData[4] . " on [x].";
 
-    mail($to, $subject, $text, $from);
+    return mail($to, $subject, $text, $from);
 }
 
 ?>
