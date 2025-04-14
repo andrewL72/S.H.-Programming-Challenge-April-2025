@@ -6,20 +6,19 @@
 * or out of bounds.
 */
 
-//determines if the passed geoJSON data represents a clinician who is
+//determines if the passed object data represents a clinician who is
 //in or out of bounds. Returns 1 if clinician is in bounds, 0 if
 //clinician is out of bounds, and -1 if there was an error.
+//$geoJSON is expected to be an object representing a geoJSON string.
 function isInBounds($geoJSON)
 {
-        //parse geoJSON data into object
-        $geoData = json_decode($geoJSON);
         $clinicianCoords = [];
         $polygonCoords = [];
         $inBBox = false;
     
         //Note that this script assumes that the GeoJSON data always contains exactly 
         //one point and one polygon.
-        foreach($geoData->features as $geoFeature)
+        foreach($geoJSON->features as $geoFeature)
         {
             if ($geoFeature->geometry->type == "Point")
             {

@@ -30,7 +30,8 @@ if (isset($_POST["id"]))
     }
     fclose($file);
 
-    $inBounds = isInBounds($response);
+    $geoJSON = json_decode($response);
+    $inBounds = isInBounds($geoJSON);
 
     if ($inBounds == 1)
     {
@@ -53,8 +54,9 @@ if (isset($_POST["id"]))
     }
 
     //output clinician data to csv here
-    $clinicians[$id][3] = time();
-    $clinicians[$id][4] = "json updated lol";
+    $clinicians[$id][3] = time(); //updated timestamp
+    $clinicians[$id][4] = "[" . implode(",", $geoJSON->features[0]->geometry->coordinates) . "]"; //clinicians current coords
+    $clinicians[$id][5] = "json updated lol"; //copy of geoJSON string
 
     $file = fopen("../data/clinicians.csv", "w");
     foreach ($clinicians as $c)

@@ -36,7 +36,8 @@ foreach ($clinicians as $c)
 
     $cmd = "curl https://3qbqr98twd.execute-api.us-west-2.amazonaws.com/test/clinicianstatus/" . $id;
     $response = exec(escapeshellcmd($cmd));
-    $inBounds = isInBounds($response);
+    $geoJSON = json_decode($response);
+    $inBounds = isInBounds($geoJSON);
 
     //update event log here
 
