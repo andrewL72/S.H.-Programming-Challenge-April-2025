@@ -43,7 +43,7 @@
     <script>
       function getClinicianStatus(clinicianID){
         $.ajax({
-          url: "./scripts/getClinicianStatus.php",
+          url: "./scripts/getAllCliniciansStatus.php",
           type: "POST",
           data: {
             id: clinicianID
@@ -62,7 +62,7 @@
 
       function updateCliniciansTable()
       {
-        
+
       }
     </script>
   </body>

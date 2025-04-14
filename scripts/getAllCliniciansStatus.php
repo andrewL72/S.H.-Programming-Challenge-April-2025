@@ -5,6 +5,9 @@
 * Script updates all clinicians specified in clinicians.csv with
 * their current location status. Also updates event_log.csv for
 * each clinician.
+* if any clinicians are detected as newly out of bounds, 
+* this script will also call sendWarningEmail if a clinician is
+* newly detected as out of bounds.
 */
 
 include_once "./isInBounds.php";
@@ -18,6 +21,8 @@ while(($nextLine = fgetcsv($file, 0 ,",","\"","\\")) !== false)
 }
 fclose($file);
 
+//update csv file
+$file = fopen("../data/clinicians.csv", "w");
 foreach ($clinicians as $c)
 {
     $id = $c[0];
@@ -61,13 +66,9 @@ foreach ($clinicians as $c)
     //update geoJSON
     $c[4] = "updated lol";
 
-}
-
-//update csv file
-$file = fopen("../data/clinicians.csv", "w");
-foreach ($clinicians as $c)
-{
+    echo "<br>" . implode(",", $c) . "<br>";
     fputcsv($file, $c, ",", "\"", "\\", "\n");
+
 }
 fclose($file);
 ?>
