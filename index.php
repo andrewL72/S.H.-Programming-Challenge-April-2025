@@ -30,7 +30,7 @@
     <br>
 
     <div class="container" style="padding-left: 20px">
-      <button type="button" onclick="getClinicianStatus()">Fetch Status</button>
+      <button type="button" onclick="getClinicianStatus(1)">Fetch Status</button>
       <br> <br>
       <p> The current status of Clinician 1 is: <p>
       <div id="curClinicianStatus"> Not yet fetched. </div>
@@ -41,12 +41,12 @@
 
     <!-- ajax queries -->
     <script>
-      function getClinicianStatus(){
+      function getClinicianStatus(clinicianID){
         $.ajax({
           url: "./scripts/getClinicianStatus.php",
           type: "POST",
           data: {
-            id: 1
+            id: clinicianID
           },
           success: function (data){
             console.log("data recieved!");
