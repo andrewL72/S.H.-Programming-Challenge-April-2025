@@ -51,13 +51,11 @@ foreach ($clinicians as $c)
     if ($inBounds == 1)
     {
         //clinician is IN BOUNDS
-        //echo "<p style='color:green'> IN BOUNDS </p>";
         $c[2] = "IN BOUNDS";
     }
     else if ($inBounds == 0)
     {
         //clinician is OUT OF BOUNDS
-        //echo "<p style='color:red'> OUT OF BOUNDS </p>";
 
         //if clinician has just moved out of bounds (ie their status is not already 'out of bounds')
         //then send a warning email to the system.
@@ -92,7 +90,7 @@ foreach ($clinicians as $c)
     //update geoJSON
     $c[5] = "updated lol";
 
-    echo "<br>" . implode(",", $c) . "<br>";
+    echo "\n<br>" . implode(",", $c) . "<br>";
     fputcsv($cFile, $c, ",", "\"", "\\", "\n");
 
     $event = array($id, $c[2], $c[3], $c[4], "updated lol");
