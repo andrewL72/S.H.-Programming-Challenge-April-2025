@@ -16,7 +16,7 @@ while(($nextLine = fgetcsv($cFile, 0 ,",","\"","\\")) !== false)
 fclose($cFile);
 
 //remove column headers row
-unset($clinicians[0]);
+//unset($clinicians[0]);
 
 //build table header.
 $output = "<table class='table table-striped'> <thead class='thead-light'> <tr> <th scope='col'></th> <th scope='col'>Clinician</th> 
