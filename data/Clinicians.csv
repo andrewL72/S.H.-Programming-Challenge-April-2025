@@ -1,7 +1,7 @@
-"id","name","status","updated","geo_json"
-1,"One","UNKNOWN",0,""
-2,"Two","UNKNOWN",0,""
-3,"Three","UNKNOWN",0,""
-4,"Four","UNKNOWN",0,""
-5,"Five","UNKNOWN",0,""
-6,"Six","UNKNOWN",0,""
+id,name,status,updated,geo_json
+1,One,"IN BOUNDS",1744598732,"json updated lol"
+2,Two,UNKNOWN,0,
+3,Three,UNKNOWN,0,
+4,Four,UNKNOWN,0,
+5,Five,UNKNOWN,0,
+6,Six,UNKNOWN,0,

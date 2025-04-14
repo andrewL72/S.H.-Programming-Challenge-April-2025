@@ -56,6 +56,13 @@ if (isset($_POST["id"]))
     $clinicians[$id][3] = time();
     $clinicians[$id][4] = "json updated lol";
 
+    $file = fopen("../data/clinicians.csv", "w");
+    foreach ($clinicians as $c)
+    {
+        fputcsv($file, $c, ",", "\"", "\\", "\n");
+    }
+    fclose($file);
+
     foreach ($clinicians as $c)
     {
         echo "<br>" . implode(",", $c) . "<br>";
