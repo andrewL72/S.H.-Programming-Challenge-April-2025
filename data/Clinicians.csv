@@ -1,2 +1,11 @@
-# clinicians.csv    
-"id","name","status","lastLocation","lastUpdated","lastGeoJSON"
+# clinicians.csv  
+# Andrew Leamy, April 2025  
+# csv file listing data for all clinicians considered part of
+# the system for this programming challenge.
+"id","name","status","status_updated","geo_json"
+1,"One","IN BOUNDS",0,""
+2,"Two","IN BOUNDS",0,""
+3,"Three","IN BOUNDS",0,""
+4,"Four","IN BOUNDS",0,""
+5,"Five","IN BOUNDS",0,""
+6,"Six","IN BOUNDS",0,""
