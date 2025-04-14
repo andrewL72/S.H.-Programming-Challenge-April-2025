@@ -15,6 +15,11 @@ function isInBounds($geoJSON)
         $clinicianCoords = [];
         $polygonCoords = [];
         $inBBox = false;
+
+        if(!isset($geoJSON->features))
+        {
+            return -1;
+        }
     
         //Note that this script assumes that the GeoJSON data always contains exactly 
         //one point and one polygon.
