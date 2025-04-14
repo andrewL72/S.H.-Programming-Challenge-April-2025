@@ -1,2 +1,2 @@
-"event_id","clinician_id","status","timestamp","geo_json"
-0,1,"IN BOUNDS",0,""
+"clinician_id","status","timestamp","geo_json"
+1,"IN BOUNDS",0,""
