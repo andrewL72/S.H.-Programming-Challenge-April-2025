@@ -53,6 +53,8 @@ if (isset($_POST["id"]))
     }
 
     //output clinician data to csv here
+    $clinicians[$id][3] = time();
+    $clinicians[$id][4] = "json updated lol";
 
     foreach ($clinicians as $c)
     {
