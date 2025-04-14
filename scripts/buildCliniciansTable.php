@@ -19,12 +19,13 @@ fclose($cFile);
 unset($clinicians[0]);
 
 //build table header.
-$output = "<table> <tr> <th></th> <th>Clinician</th> <th>Coordinates</th> <th>Status</th> <th hidden>Warning Message</th> </tr>";
+$output = "<table class='table table-striped'> <thead class='thead-light'> <tr> <th scope='col'></th> <th scope='col'>Clinician</th> 
+            <th scope='col'>Coordinates</th> <th scope='col'>Status</th> <th scope='col' hidden>Warning Message</th> </tr> </thead>";
 
 foreach ($clinicians as $c)
 {
     $output .= "<tr>";
-    $output .= "<td> <input type='radio' id='radio" . $c[0] . "' value='" . $c[0] . "'> </td>";
+    $output .= "<th scope='row'> <input type='radio' id='radio" . $c[0] . "' value='" . $c[0] . "'> </th>";
     $output .= "<td>" . $c[1] . "</td>";
     $output .= "<td>" . $c[4] . "</td>";
 
