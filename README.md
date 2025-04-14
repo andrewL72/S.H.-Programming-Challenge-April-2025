@@ -1,6 +1,6 @@
 # S.H.-Programming-Challenge-April-2025
 
-Programming challenge set forth by S.H. in april of 2025,
+Programming challenge set forth by S.H. in April of 2025,
 completed by Andrew Leamy
 
 Requires PHP 8 and Composer to be installed on your device to 
