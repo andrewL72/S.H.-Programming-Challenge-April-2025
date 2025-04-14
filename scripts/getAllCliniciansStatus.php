@@ -61,8 +61,8 @@ foreach ($clinicians as $c)
         //then send a warning email to the system.
         if($c[2] != "OUT OF BOUNDS")
         {
-            // $mailResult = sendWarningEmail($c);
-            // echo "<br>" . $mailResult . "<br>";
+            $mailResult = sendWarningEmail($c);
+            //echo "<br>" . $mailResult . "<br>";
         }
         $c[2] = "OUT OF BOUNDS";
     }
@@ -90,7 +90,7 @@ foreach ($clinicians as $c)
     //update geoJSON
     $c[5] = "updated lol";
 
-    echo "\n<br>" . implode(",", $c) . "<br>";
+    //echo "\n<br>" . implode(",", $c) . "<br>";
     fputcsv($cFile, $c, ",", "\"", "\\", "\n");
 
     $event = array($id, $c[2], $c[3], $c[4], "updated lol");

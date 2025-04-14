@@ -44,7 +44,11 @@ foreach ($clinicians as $c)
 
     if ($c[2] == "OUT OF BOUNDS")
     {
-        $output .= "<td> <span style='color:red'> ! Warning email sent on [x] </span> </td>";
+        $output .= "<td style='background-color:lightblue;opacity:0.3;'> <span style='color:red'> ! Warning email sent on [x] </span> </td>";
+    }
+    else
+    {
+        $output .= "<td></td>";
     }
 
     $output .= "</tr>";
