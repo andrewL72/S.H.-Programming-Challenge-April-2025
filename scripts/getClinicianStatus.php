@@ -59,6 +59,8 @@ if (isset($_POST["id"]))
     $clinicians[$id][5] = "json updated lol"; //copy of geoJSON string
 
     $file = fopen("../data/clinicians.csv", "w");
+    $columns = array("id","name","status","updated","coords","geo_json");
+    fputcsv($file, $columns, ",", "\"", "\\", "\n");
     foreach ($clinicians as $c)
     {
         fputcsv($file, $c, ",", "\"", "\\", "\n");

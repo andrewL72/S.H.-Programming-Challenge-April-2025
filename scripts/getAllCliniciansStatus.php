@@ -11,6 +11,7 @@
 */
 
 include_once "./isInBounds.php";
+include_once "./sendWarningEmail.php";
 
 //first, load in clinician data
 $cFile = fopen("../data/clinicians.csv", "r");
@@ -24,6 +25,13 @@ fclose($cFile);
 //update csv file
 $cFile = fopen("../data/clinicians.csv", "w");
 $eFile = fopen("../data/event_log.csv", "a");
+
+//re-insert columns into csv files
+$columns = array("id","name","status","updated","coords","geo_json");
+fputcsv($cFile, $columns, ",", "\"", "\\", "\n");
+$columns = array("clinician_id","status","timestamp","coords","geo_json");
+fputcsv($eFile, $columns, ",", "\"", "\\", "\n");
+
 foreach ($clinicians as $c)
 {
     $id = $c[0];
@@ -39,8 +47,6 @@ foreach ($clinicians as $c)
     $geoJSON = json_decode($response);
     $inBounds = isInBounds($geoJSON);
 
-    //update event log here
-
     //first update clinician status
     if ($inBounds == 1)
     {
@@ -52,6 +58,15 @@ foreach ($clinicians as $c)
     {
         //clinician is OUT OF BOUNDS
         //echo "<p style='color:red'> OUT OF BOUNDS </p>";
+
+        //if clinician has just moved out of bounds (ie their status is not already 'out of bounds')
+        //then send a warning email to the system.
+
+        if($c[2] != "OUT OF BOUNDS")
+        {
+            $mailResult = sendWarningEmail($c);
+            echo "<br>" . $mailResult . "<br>";
+        }
         $c[2] = "OUT OF BOUNDS";
     }
     else if ($inBounds == -1)
@@ -66,7 +81,14 @@ foreach ($clinicians as $c)
     $c[3] = time();
 
     //update coordinates
-    $c[4] = "[" . implode(",", $geoJSON->features[0]->geometry->coordinates) . "]";
+    if ($c[2] == "ERROR")
+    {
+        $c[4] = "ERROR";
+    }
+    else
+    {
+        $c[4] = "[" . implode(",", $geoJSON->features[0]->geometry->coordinates) . "]";
+    }
 
     //update geoJSON
     $c[5] = "updated lol";
