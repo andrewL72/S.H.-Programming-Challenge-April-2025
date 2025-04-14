@@ -1,0 +1,24 @@
+{
+    "name": "rodrigoq/phpmailersendgrid",
+    "homepage": "http://github.com/rodrigoq/PHPMailerSendGrid",
+    "description": "PHPMailer extension to send emails via Sendgrid (or save to file).",
+    "keywords": [
+        "email",
+        "mailer",
+        "phpmailer",
+        "sendgrid"
+    ],
+    "type": "library",
+    "license": "LGPL-3.0-or-later",
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "sendgrid/sendgrid": "^7.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPMailer\\PHPMailer\\" : "src/"
+        }
+    },
+    "version": "1.0.6"
+}
+
