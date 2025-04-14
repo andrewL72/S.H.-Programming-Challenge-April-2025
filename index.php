@@ -50,7 +50,7 @@
           },
           success: function (data){
             console.log("data recieved!");
-            $("#curClinicianStatus").text(data);
+            $("#curClinicianStatus").html(data);
           },
           error:function(e){
                 //the script that runs the curl call to the api failed.
@@ -58,6 +58,11 @@
                 console.error(e);
             }  
         });
+      }
+
+      function updateCliniciansTable()
+      {
+        
       }
     </script>
   </body>

@@ -7,8 +7,8 @@
 */
 
 //determines if the passed geoJSON data represents a clinician who is
-//in or out of bounds. Returns a string indicating which case is true,
-//or indicating an error occured.
+//in or out of bounds. Returns 1 if clinician is in bounds, 0 if
+//clinician is out of bounds, and -1 if there was an error.
 function isInBounds($geoJSON)
 {
         //parse geoJSON data into object
@@ -34,7 +34,7 @@ function isInBounds($geoJSON)
         //error handling if api call returns invalid data
         if (empty($polygonCoords) || empty($clinicianCoords))
         {
-            return "ERROR: INVALID GEOJSON";
+            return -1;
         }
     
         //Mathematically determine if the clinician's coordinates are inside
@@ -152,18 +152,27 @@ function isInBounds($geoJSON)
         }
     
         //return wether or not the clincian is in bounds.
+        // if ($inBounds)
+        // {
+        //     $returnMessage = "<p style='color:green'>WITHIN BOUNDS</p>";
+        // }
+        // else
+        // {
+        //     $returnMessage = "<p style='color:red'>OUT OF BOUNDS</p>";
+        // }
+    
+        // if($inBBox) { $returnMessage .= ".....ALSO WITHIN BBOX.....";}
+    
+        // return $returnMessage . "<br>\n" . ".........Intersection Count: " . $intersectionCount;
+
         if ($inBounds)
         {
-            $returnMessage = "<p style='color:green'>WITHIN BOUNDS</p>";
+            return 1;
         }
         else
         {
-            $returnMessage = "<p style='color:red'>OUT OF BOUNDS</p>";
+            return 0;
         }
-    
-        if($inBBox) { $returnMessage .= ".....ALSO WITHIN BBOX.....";}
-    
-        return $returnMessage . "<br>\n" . ".........Intersection Count: " . $intersectionCount;
 }
 
 ?>
