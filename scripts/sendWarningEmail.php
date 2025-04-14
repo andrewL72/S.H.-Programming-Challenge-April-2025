@@ -9,7 +9,7 @@
 
 //sends a warning email stating that the clinician of the 
 //passed id has left their boundry zone.
-function($id)
+function sendWarningEmail ($id)
 {
     //destination email is hard-codded and provided in the challenge instructions.
     $to = "sprinter-eng-test@guerrillamail.info";
